@@ -35,7 +35,7 @@ class DisplayHATMini:
     # --- Initialize Display ---
     def initialize_display(self):
         self.img = Image.new("RGB", (320, 240), (0, 0, 0))
-        self.display = DisplayHATMini(self.img)
+        self.display.image(self.img)
         self.draw = ImageDraw.Draw(self.img)
         self.display.set_backlight(self.backlight)  # full brightness
 
