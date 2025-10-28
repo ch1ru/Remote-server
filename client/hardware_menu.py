@@ -8,9 +8,9 @@ from helper import *
 
 
 class DisplayHATMini:
-    def __init__(self, image, menu_items, title, backlight=1.0, font=ImageFont.load_default()):
-        self.image = image
-        self.backlight = 1.0  # default full brightness
+    def __init__(self, menu_items, title, backlight=1.0, font=ImageFont.load_default()):
+
+        self.backlight = backlight  # default full brightness
 
         # --- GPIO pins for Display HAT Mini buttons ---
         self.BUTTON_A = 5
@@ -18,7 +18,7 @@ class DisplayHATMini:
         self.BUTTON_X = 16
         self.BUTTON_Y = 24
 
-        self.font = ImageFont.load_default()
+        self.font = font
         self.menu_items = menu_items
         self.title = title
         self.selected = 0
@@ -94,7 +94,7 @@ class DisplayHATMini:
 
 
 id = "test_yyy"
-device_menu = DisplayHATMini(None, title=id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "IGV Viewer", "Exit"])
+device_menu = DisplayHATMini(title=id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "IGV Viewer", "Exit"])
 device_menu.render_menu()
 
 # --- Main loop ---
