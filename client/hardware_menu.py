@@ -75,8 +75,8 @@ class DisplayMenu:
             self.draw.rectangle((155, 180, 165, 190), (s8, s8, s8))
             self.draw.rectangle((175, 180, 185, 190), (s9, s9, s9))
 
-            self.display.display()  # ✅ no arguments
-            time.sleep(1)
+            self.display.display()
+            time.sleep(0.1)
 
     def show_qr(self, img):
         self.img.paste(img.resize((200, 200)), (60, 20))
@@ -106,10 +106,13 @@ try:
         if not GPIO.input(device_menu.BUTTON_X):  # Select
             choice = device_menu.menu_items[device_menu.selected]
             if choice == "Trim reads":
-                task_id = fastp(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
                 # wait for fastp to finish, then generate QR once
                 device_menu.show_loader("Trimming reads")
+
+                task_id = fastp(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
+
+                
                 wait_for_task(task_id, interval=1, verbose=True)
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
