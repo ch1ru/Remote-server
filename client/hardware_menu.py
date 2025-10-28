@@ -80,7 +80,7 @@ class DisplayMenu:
 
     def show_qr(self, img):
         self.img.paste(img.resize((200, 200)), (60, 20))
-        self.display.display(self.img)
+        self.display.display()
 
     def show_message(self, msg):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
