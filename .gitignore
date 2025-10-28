@@ -1,0 +1,7 @@
+__pycache__/
+.vscode/
+*.py[cod]
+client/reports/*
+client/qr/*
+server/workspace
+client/data

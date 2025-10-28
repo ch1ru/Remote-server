@@ -1,0 +1,834 @@
+.card {
+  position: absolute;
+  top: -1000px;
+  left: -1000px;
+  z-index: 1024;
+  width: 300px;
+  height: 200px;
+  border-color: #a09fa0;
+  background-color: #ffffff;
+  user-select: none;
+}
+.card .card-body {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: unset;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+.card .card-body .igv-webapp-panel-drag-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  background-color: #d0d0d0;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+.card .card-body .igv-webapp-panel-drag-container i {
+  cursor: grab;
+  color: #6e6e6e;
+  display: block;
+}
+.card .card-body .igv-webapp-panel-drag-container i:first-child {
+  cursor: unset;
+  color: transparent;
+  background-color: transparent;
+}
+.card .card-body .igv-webapp-panel-drag-container i:last-child {
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+#igv-app-share-modal {
+  color: #5f5f5f;
+}
+#igv-app-share-modal .modal-body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  padding: unset;
+}
+#igv-app-share-modal .modal-body .modal-body-section {
+  padding: 16px;
+}
+
+button#igv-share-url-button {
+  padding: unset;
+}
+button#igv-share-url-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+input#igv-app-share-input {
+  pointer-events: none;
+}
+
+#igv-app-qrcode-image {
+  padding: 16px;
+  display: none;
+}
+
+#igv-app-embed-container {
+  padding: 16px;
+  display: none;
+}
+
+.igv-app-social-button-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.igv-app-social-button {
+  float: left;
+}
+
+.custom-btn-group .btn.single-button {
+  border-radius: 0.25rem !important;
+}
+
+#igv-encode-spinner-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Scoped styles for the custom modal */
+.igv-app-track-select-modal .modal-dialog {
+  resize: both;
+  /* Enables resizing */
+  overflow: auto;
+  /* Ensures content is scrollable */
+  max-width: 100%;
+  /* Prevents exceeding the viewport width */
+  max-height: 100%;
+  /* Prevents exceeding the viewport height */
+  width: 80%;
+  /* Initial width */
+  height: 80%;
+  /* Initial height */
+  position: relative;
+  /* Required for proper resizing behavior */
+  box-sizing: border-box;
+  /* Ensures padding and borders are included in size calculations */
+}
+
+.igv-app-track-select-modal .modal-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* Full height for the modal */
+}
+
+.igv-app-track-select-modal .modal-body {
+  flex: 1;
+  /* Allow the body to take up available space */
+  overflow-y: auto;
+  /* Make the body scrollable */
+}
+
+.igv-app-track-select-modal .modal-footer {
+  flex-shrink: 0;
+  /* Prevent the footer from shrinking */
+}
+
+.igv-app-track-select-modal .modal-header .additional-html {
+  margin-top: 10px;
+  /* Add vertical gap */
+  text-align: left;
+  /* Ensure left alignment */
+}
+
+.igv-widgets-alert-dialog-container {
+  box-sizing: content-box;
+  position: absolute;
+  z-index: 2048;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 200px;
+  border-color: #7F7F7F;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: thin;
+  outline: none;
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  background-color: white;
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.igv-widgets-alert-dialog-container > div:first-child {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 24px;
+  cursor: move;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  border-bottom-color: #7F7F7F;
+  border-bottom-style: solid;
+  border-bottom-width: thin;
+  background-color: #eee;
+}
+.igv-widgets-alert-dialog-container > div:first-child div:first-child {
+  padding-left: 8px;
+}
+.igv-widgets-alert-dialog-container #igv-widgets-alert-dialog-body {
+  color: #373737;
+  width: 100%;
+  height: calc(100% - 24px - 64px);
+  overflow-y: scroll;
+}
+.igv-widgets-alert-dialog-container #igv-widgets-alert-dialog-body #igv-widgets-alert-dialog-body-copy {
+  cursor: pointer;
+  margin: 16px;
+  width: auto;
+  height: auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  background-color: white;
+  border: unset;
+}
+.igv-widgets-alert-dialog-container > div:last-child {
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: white;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.igv-widgets-alert-dialog-container > div:last-child div {
+  margin: unset;
+  width: 40px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  font-size: small;
+  font-weight: 400;
+  border-color: #2B81AF;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 4px;
+  background-color: #2B81AF;
+}
+.igv-widgets-alert-dialog-container > div:last-child div:hover {
+  cursor: pointer;
+  border-color: #25597f;
+  background-color: #25597f;
+}
+
+.card.custom-dialog-card {
+  font-size: 0.85rem;
+  background-color: #cae3f1;
+  position: fixed;
+  top: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  margin: 0.5rem;
+}
+
+.igv-file-load-widget-container {
+  position: relative;
+  border-color: transparent;
+  width: 100%;
+  color: #7F7F7F;
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 200;
+  border-style: solid;
+  border-width: thin;
+  background-color: white;
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.igv-file-load-widget-container .igv-file-load-widget-header {
+  width: 100%;
+  height: 24px;
+  background-color: #bfbfbf;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+.igv-file-load-widget-container .igv-file-load-widget-header div {
+  height: 24px;
+  width: 16px;
+  margin-right: 6px;
+  text-align: center;
+  line-height: 24px;
+  color: #373737;
+}
+.igv-file-load-widget-container .igv-file-load-widget-header div:hover {
+  cursor: pointer;
+}
+.igv-file-load-widget-container .igv-flw-input-container {
+  width: 95%;
+  margin-top: 24px;
+  margin-bottom: 0;
+  display: flex;
+  flex-flow: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row {
+  height: 36px;
+  width: 100%;
+  margin-top: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  border-color: white;
+  border-style: solid;
+  border-width: thin;
+  border-radius: calc(2 * 2px);
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-input-label {
+  color: #6c757c;
+  font-weight: 400;
+  width: 136px;
+  height: 36px;
+  line-height: 36px;
+  text-align: left;
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row input {
+  display: block;
+  height: 100%;
+  width: 100%;
+  padding-left: 4px;
+  color: #373737;
+  font-size: 0.875rem;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  text-align: left;
+  outline: none;
+  border-style: solid;
+  border-width: thin;
+  border-color: #dee2e6;
+  border-radius: 0.25rem;
+  background-color: white;
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row input {
+  height: calc(36px - 12px);
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-file-chooser-container {
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: calc(36px - 8px);
+  border-color: #6c757c;
+  border-style: solid;
+  border-width: thin;
+  border-radius: calc(2 * 2px);
+  background-color: white;
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-file-chooser-container label {
+  display: block;
+  margin: unset;
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-file-chooser-container label.igv-flw-label-color {
+  color: #6c757c;
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-file-chooser-container label.igv-flw-label-color-hover {
+  cursor: pointer;
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-file-chooser-container input.igv-flw-file-chooser-input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-file-chooser-container:hover {
+  cursor: pointer;
+  background-color: #6c757c;
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-drag-drop-target {
+  cursor: default;
+  margin-left: 8px;
+  width: 120px;
+  height: calc(36px - 8px);
+  line-height: calc(36px - 8px);
+  text-align: center;
+  border-color: #7F7F7F;
+  border-style: dashed;
+  border-width: thin;
+  border-radius: calc(2 * 2px);
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-local-file-name-container {
+  max-width: 400px;
+  height: 36px;
+  color: #373737;
+  line-height: 36px;
+  text-align: left;
+  font-weight: 400;
+  margin-left: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row-hover-state {
+  background-color: #efefef;
+  border-color: #7F7F7F;
+}
+.igv-file-load-widget-container .igv-flw-error-message-container {
+  margin-top: 8px;
+  width: 95%;
+  height: 24px;
+  padding-left: 8px;
+  color: white;
+  font-size: 0.875rem;
+  background-color: rgba(59, 92, 127, 0.5);
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.igv-file-load-widget-container .igv-flw-error-message-container div:first-child.igv-flw-error-message {
+  height: 24px;
+  width: 600px;
+  font-style: italic;
+  line-height: 24px;
+  text-align: left;
+}
+.igv-file-load-widget-container .igv-flw-error-message-container div:last-child {
+  height: 24px;
+  width: 16px;
+  margin-right: 6px;
+  text-align: center;
+  line-height: 24px;
+  color: #373737;
+}
+.igv-file-load-widget-container .igv-flw-error-message-container div:hover {
+  cursor: pointer;
+}
+.igv-file-load-widget-container .igv-file-load-widget-ok-cancel {
+  width: 100%;
+  height: 28px;
+  margin-top: 32px;
+  color: white;
+  font-size: 0.875rem;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+.igv-file-load-widget-container .igv-file-load-widget-ok-cancel div {
+  width: 75px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-color: transparent;
+  border-style: solid;
+  border-width: thin;
+  border-radius: 2px;
+  margin-right: 16px;
+}
+.igv-file-load-widget-container .igv-file-load-widget-ok-cancel div:first-child {
+  margin-right: 22px;
+  background-color: #c4c4c4;
+}
+.igv-file-load-widget-container .igv-file-load-widget-ok-cancel div:first-child:hover {
+  cursor: pointer;
+  background-color: #7f7f7f;
+}
+.igv-file-load-widget-container .igv-file-load-widget-ok-cancel div:last-child {
+  background-color: #5ea4e0;
+}
+.igv-file-load-widget-container .igv-file-load-widget-ok-cancel div:last-child:hover {
+  cursor: pointer;
+  background-color: #3b5c7f;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  padding-top: 48px;
+}
+
+#igv-main {
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+}
+footer a {
+  color: #5f5f5f;
+  text-decoration: none;
+}
+
+.d-flex-column {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#igv-google-drive-dropdown .dropdown-item {
+  width: 100%;
+}
+
+#igv-google-drive-dropdown-toggle {
+  color: transparent;
+  background-color: transparent;
+  border-color: transparent;
+  padding: unset;
+}
+
+#igv-custom-modal {
+  font-size: 0.9rem;
+}
+
+#igv-app-encode-signal-modal {
+  font-size: 0.9rem;
+}
+
+#igv-app-encode-others-modal {
+  font-size: 0.9rem;
+}
+
+#igv-widgets-generic-select-modal-footnotes {
+  font-size: 0.9rem;
+  padding-bottom: 0.75rem;
+}
+
+#igv-circular-view-container .jss9 {
+  overflow: unset;
+}
+
+#igv-app-container {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+hr {
+  margin: unset;
+  border-top-color: #a2a2a2;
+}
+
+.navbar {
+  min-height: 48px;
+  background-color: #5f5f5f;
+}
+
+ul.navbar-nav > li > div > a {
+  color: white;
+  text-decoration: none;
+  outline: 0;
+}
+ul.navbar-nav > li > div > a:hover {
+  color: #dfdfdf;
+}
+
+a#igv-app-save-svg-button {
+  color: #212529;
+}
+
+a#igv-app-save-png-button {
+  color: #212529;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  padding: 0.125rem 1rem;
+}
+
+label.dropdown-item {
+  margin-bottom: unset;
+}
+
+.dropdown-menu {
+  overflow-y: auto;
+  max-height: 512px;
+  font-size: 0.875rem;
+}
+
+#igv-app-save-image-dropdown-menu a {
+  text-decoration-color: transparent;
+}
+
+#igv-app-genome-dropdown-menu.dropdown-menu {
+  min-width: 19rem;
+}
+
+.igv-app-dropdown-item-cloud-storage {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 18px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.igv-app-dropdown-item-cloud-storage div:first-child {
+  margin-right: 4px;
+}
+.igv-app-dropdown-item-cloud-storage div:last-child {
+  margin-left: 4px;
+}
+
+.modal-header {
+  padding: 0.7rem 1rem;
+}
+
+.modal-title {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 1.2rem;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+}
+
+.modal-body select {
+  font-size: 0.875rem;
+}
+.modal-body select option {
+  font-size: 0.875rem;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.modal-footer {
+  border-top: unset;
+  padding: 0.6rem 0.75rem;
+}
+
+#igv-app-session-save-modal .modal-body {
+  padding: 2rem;
+}
+
+#igv-app-svg-save-modal .modal-body {
+  padding: 2rem;
+}
+
+.igv-app-modal-button-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 32px;
+  height: 100%;
+}
+
+.igv-app-file-save-modal .modal-body div {
+  color: #5f5f5f;
+  margin-top: 8px;
+  margin-left: 8px;
+  font-size: 0.75rem;
+}
+
+#igv-app-encode-modal .modal-dialog {
+  max-width: 75%;
+}
+
+#igv-app-multiple-file-load-modal-body.modal-body div {
+  color: #5f5f5f;
+  font-size: 18px;
+  padding-bottom: 8px;
+}
+#igv-app-multiple-file-load-modal-body.modal-body div:last-child {
+  padding-bottom: unset;
+}
+
+.igv-app-html {
+  position: relative;
+  min-height: 100%;
+}
+
+.igv-app-body-footerized {
+  margin-bottom: 48px;
+}
+
+.igv-app-modal-position {
+  position: relative;
+  height: 200px;
+  border-color: transparent;
+}
+
+.igv-app-navbar-backdrop {
+  background-color: #5f5f5f;
+}
+
+.igv-app-navbar-text {
+  color: white;
+  font-size: 14px;
+}
+
+.igv-app-site-widget {
+  float: left;
+  margin-left: 4px;
+  margin-right: 32px;
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.igv-app-disabled {
+  color: #a6a6a6;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.btn-default.app-button {
+  color: #5f5f5f;
+  border-color: #a6a6a6;
+}
+
+.igv-app-background-medium {
+  background-color: #a6a6a6;
+}
+
+.igv-app-background-dark {
+  background-color: #5f5f5f;
+}
+
+.igv-app-background-blue-green {
+  background-color: mediumaquamarine;
+}
+
+#igv-app-session-file-button input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+svg {
+  vertical-align: unset;
+}
+
+.btn:focus, .btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.igv-file-load-widget-container .igv-flw-input-container {
+  margin-top: unset;
+}
+
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-file-chooser-container .igv-app-modal-google-drive-logo {
+  width: 100%;
+  height: 100%;
+  border-color: transparent;
+  border-radius: 4px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(../img/googledrive-modal-logo-text-button.png);
+}
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-file-chooser-container .igv-app-modal-google-drive-logo:hover {
+  cursor: pointer;
+}
+
+.igv-file-load-widget-container .igv-flw-input-container .igv-flw-input-row .igv-flw-file-chooser-container:hover {
+  cursor: pointer;
+  background-color: white;
+}
+
+@media (max-width: 576px) {
+  .igv-app-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .igv-app-footer > div:first-child {
+    height: 48px;
+    line-height: 48px;
+    font-size: 1rem;
+    margin-left: 16px;
+  }
+  .igv-app-footer > div:first-child a {
+    color: #5f5f5f;
+    text-decoration: none;
+  }
+  .igv-app-footer > div {
+    height: 48px;
+    line-height: 48px;
+    font-size: 0.75rem;
+    padding-left: 64px;
+  }
+  .igv-app-footer > div:last-child {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=app.css.map */

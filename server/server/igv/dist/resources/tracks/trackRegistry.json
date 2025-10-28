@@ -1,0 +1,43 @@
+{
+  "danRer11": [
+    "resources/tracks/danRer11_4dn.json"
+  ],
+  "dm6": [
+    "resources/tracks/dm6_4dn.json"
+  ],
+  "hg19" : [
+    "https://hgdownload.soe.ucsc.edu/hubs/gtexAnalysis/hub.txt",
+    "https://ftp.ncbi.nlm.nih.gov/snp/population_frequency/TrackHub/latest/hub.txt",
+    "https://ftp.ncbi.nlm.nih.gov/pub/dbVar/sandbox/dbvarhub/hub.txt",
+    "https://ftp.ncbi.nlm.nih.gov/refseq/FunctionalElements/trackhub/hub.txt"
+  ],
+  "hg38": [
+    "---",
+    "resources/tracks/hg38_gtex.json",
+    "https://hgdownload.soe.ucsc.edu/hubs/gtexAnalysis/hub.txt",
+    "---",
+    "https://ftp.ncbi.nlm.nih.gov/snp/population_frequency/TrackHub/latest/hub.txt",
+    "https://ftp.ncbi.nlm.nih.gov/pub/dbVar/sandbox/dbvarhub/hub.txt",
+    "https://ftp.ncbi.nlm.nih.gov/refseq/FunctionalElements/trackhub/hub.txt",
+    "resources/tracks/hg38_4dn.json",
+    "---"
+  ],
+  "hg38_1kg": [
+    "---",
+    "resources/tracks/hg38_gtex.json",
+    "https://hgdownload.soe.ucsc.edu/hubs/gtexAnalysis/hub.txt",
+    "---",
+    "https://ftp.ncbi.nlm.nih.gov/snp/population_frequency/TrackHub/latest/hub.txt",
+    "https://ftp.ncbi.nlm.nih.gov/pub/dbVar/sandbox/dbvarhub/hub.txt",
+    "https://ftp.ncbi.nlm.nih.gov/refseq/FunctionalElements/trackhub/hub.txt",
+    "resources/tracks/hg38_4dn.json",
+    "---"
+  ],
+  "mm10": [
+    "https://ftp.ncbi.nlm.nih.gov/refseq/FunctionalElements/trackhub/hub.txt",
+    "resources/tracks/mm10_4dn.json"
+  ],
+  "galGal5": [
+    "resources/tracks/galGal5_4dn.json"
+  ]
+}

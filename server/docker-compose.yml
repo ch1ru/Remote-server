@@ -1,0 +1,91 @@
+version: '3.9'
+services:
+  fastapi:
+    container_name: fastapi
+    restart: unless-stopped
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    ports:
+      - 5000:5000
+    env_file:
+      - ./server/.env
+    volumes:
+      - ./workspace:/workspace
+    depends_on:
+      - postgres
+    networks:
+      - bridged_net_adapter
+
+  igv:
+    container_name: igv
+    restart: unless-stopped
+    build:
+      context: ./server/igv
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    env_file:
+      - ./server/igv/.env
+    networks:
+      - bridged_net_adapter
+      
+  postgres:
+    container_name: postgresql
+    restart: unless-stopped
+    build: 
+      context: ./postgres
+      dockerfile: Dockerfile
+    env_file:
+      - ./postgres/.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - bridged_net_adapter
+
+  worker:
+    container_name: worker
+    restart: unless-stopped
+    build:
+      context: ./server/app/worker
+      dockerfile: worker.Dockerfile
+    volumes:
+      - celery:/celerylogs
+      - ./workspace:/workspace
+    env_file:
+      - ./server/app/worker/.env
+    ports:
+      - 5556:5555
+    depends_on:
+      - redis
+      - fastapi
+    networks:
+      - bridged_net_adapter
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - 6379:6379
+    networks:
+      - bridged_net_adapter
+
+networks:
+  bridged_net_adapter:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 192.168.50.0/24
+
+volumes:
+  redis_data:
+  celery:
+  postgres_data:
