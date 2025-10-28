@@ -54,3 +54,5 @@ class APIClient:
 
 api_client = APIClient(os.getenv("DEV_API"))
 celery_client = APIClient(os.getenv("CELERY_API"))
+
+print(api_client)
