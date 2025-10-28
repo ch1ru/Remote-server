@@ -32,13 +32,6 @@ class DisplayHATMini:
         for pin in [self.BUTTON_A, self.BUTTON_B, self.BUTTON_X, self.BUTTON_Y]:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-    # --- Initialize Display ---
-    def initialize_display(self):
-        self.img = Image.new("RGB", (320, 240), (0, 0, 0))
-        self.display.image(self.img)
-        self.draw = ImageDraw.Draw(self.img)
-        self.display.set_backlight(self.backlight)  # full brightness
-
     def render_menu(self):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
         self.draw.text((20, 20), self.title, font=self.font, fill=(0, 0, 255))
