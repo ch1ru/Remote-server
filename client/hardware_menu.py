@@ -24,7 +24,6 @@ class DisplayHATMini:
         self.selected = 0
 
         self.setup_gpio()
-        self.initialize_display()
 
     # --- Setup GPIO ---
     def setup_gpio(self):
