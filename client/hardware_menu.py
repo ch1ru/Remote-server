@@ -116,7 +116,7 @@ try:
                 wait_for_task(task_id, interval=1, verbose=True)
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
-                img.save(f'fastp_report_{id}_qrcode.png')
+                img.save(f'/qr/fastp_report_{id}_qrcode.png')
                 device_menu.show_qr(img)
                 while True:
                     if GPIO.input(device_menu.BUTTON_X):
@@ -131,7 +131,7 @@ try:
                 # show just R1 report as example
                 report_url = fastqc_report(id, filename='trimmed_anc_R1')
                 img = qrcode.make(report_url)
-                img.save(f'fastqc_report_{id}_qrcode.png')
+                img.save(f'/qr/fastqc_report_{id}_qrcode.png')
                 device_menu.show_qr(img)
                 while True:
                     if GPIO.input(device_menu.BUTTON_X):
@@ -164,7 +164,7 @@ try:
 
                 igv_url = gen_igv_url(id)
                 img = qrcode.make(igv_url)
-                img.save(f'igv_{id}_qrcode.png')
+                img.save(f'/qr/igv_{id}_qrcode.png')
 
                 device_menu.display.img.show(img)
                 device_menu.render_menu()

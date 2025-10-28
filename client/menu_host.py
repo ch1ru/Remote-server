@@ -24,7 +24,7 @@ elif args.command == 'fastp':
     wait_for_task(task_id, interval=1, verbose=True)
     report_url = fastp_report(id)
     img = qrcode.make(report_url)
-    img.save(f'fastp_report_{id}_qrcode.png')
+    img.save(f'/qr/fastp_report_{id}_qrcode.png')
     
 elif args.command == 'fastqc':
     task_id = fastqc(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
@@ -34,7 +34,7 @@ elif args.command == 'fastqc':
     # show just R1 report as example
     report_url = fastqc_report(id, filename='trimmed_anc_R1')
     img = qrcode.make(report_url)
-    img.save(f'fastqc_report_{id}_qrcode.png')
+    img.save(f'/qr/fastqc_report_{id}_qrcode.png')
 
 elif args.command == 'assemble':
     task_id = assemble(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
@@ -58,7 +58,7 @@ elif args.command == 'map':
 
     igv_url = gen_igv_url(id)
     img = qrcode.make(igv_url)
-    img.save(f'igv_{id}_qrcode.png')
+    img.save(f'/qr/igv_{id}_qrcode.png')
 
 
 else:

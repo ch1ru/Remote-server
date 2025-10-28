@@ -155,7 +155,7 @@ def fastqc_report(id, filename):
     qc_dir = os.path.join(current_dir, 'qc')
     os.makedirs(qc_dir, exist_ok=True)
     
-    out_path = os.path.join(qc_dir, f'fastqc_report_{id}.html')
+    out_path = os.path.join(qc_dir, f'/reports/fastqc_report_{id}.html')
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write(body)
 
@@ -181,7 +181,7 @@ def fastp_report(id):
     qc_dir = os.path.join(current_dir, 'qc')
     os.makedirs(qc_dir, exist_ok=True)
     
-    out_path = os.path.join(qc_dir, f'fastp_report_{id}.html')
+    out_path = os.path.join(qc_dir, f'/reports/fastp_report_{id}.html')
     with open(out_path, 'w', encoding='utf-8') as f:
         f.write(body)
 
