@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-from displayhatmini import DisplayHATMini
+from displayhatmini import DisplayHATMini as Display
 from PIL import Image, ImageDraw, ImageFont
 import time
 
@@ -7,12 +7,12 @@ import qrcode
 from helper import *
 
 
-class DisplayHATMini:
+class DisplayMenu:
     def __init__(self, menu_items, title, backlight=1.0, font=ImageFont.load_default()):
 
         self.img = Image.new("RGB", (320, 240), (0, 0, 0))
-        self.display = DisplayHATMini(img)
-        self.draw = ImageDraw.Draw(img)
+        self.draw = ImageDraw.Draw(self.img)
+        self.display = Display()
 
         self.backlight = backlight  # default full brightness
 
@@ -44,7 +44,7 @@ class DisplayHATMini:
             prefix = "> " if i == self.selected else "  "
             self.draw.text((30, y), prefix + item, font=self.font, fill=color)
             y += 30
-        self.display.display()  # ✅ no arguments
+        self.display.display()
 
     def show_loader(self, msg):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
@@ -79,18 +79,19 @@ class DisplayHATMini:
             time.sleep(1)
 
     def show_qr(self, img):
-        self.img.show(img)
+        self.img.paste(img.resize((200, 200)), (60, 20))
+        self.display.display(self.img)
 
     def show_message(self, msg):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
         self.draw.text((40, 100), msg, font=self.font, fill=(255, 255, 255))
 
     def set_backlight(self, brightness):
-        self.backlight = brightness
+        self.display.set_backlight(brightness)
 
 
 id = "test_yyy"
-device_menu = DisplayHATMini(title=id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "IGV Viewer", "Exit"])
+device_menu = DisplayMenu(title=id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "IGV Viewer", "Exit"])
 device_menu.render_menu()
 
 # --- Main loop ---
@@ -115,7 +116,7 @@ try:
                 img.save(f'/qr/fastp_report_{id}_qrcode.png')
                 device_menu.show_qr(img)
                 while True:
-                    if GPIO.input(device_menu.BUTTON_X):
+                    if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
                         break
                     time.sleep(0.2)
@@ -130,7 +131,7 @@ try:
                 img.save(f'/qr/fastqc_report_{id}_qrcode.png')
                 device_menu.show_qr(img)
                 while True:
-                    if GPIO.input(device_menu.BUTTON_X):
+                    if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
                         break
                     time.sleep(0.2)
