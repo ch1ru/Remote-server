@@ -10,6 +10,10 @@ from helper import *
 class DisplayHATMini:
     def __init__(self, menu_items, title, backlight=1.0, font=ImageFont.load_default()):
 
+        self.img = Image.new("RGB", (320, 240), (0, 0, 0))
+        self.display = DisplayHATMini(img)
+        self.draw = ImageDraw.Draw(img)
+
         self.backlight = backlight  # default full brightness
 
         # --- GPIO pins for Display HAT Mini buttons ---
