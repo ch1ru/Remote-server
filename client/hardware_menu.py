@@ -12,7 +12,7 @@ class DisplayMenu:
 
         self.img = Image.new("RGB", (320, 240), (0, 0, 0))
         self.draw = ImageDraw.Draw(self.img)
-        self.display = Display()
+        self.display = Display(self.img)
 
         self.backlight = backlight  # default full brightness
 
