@@ -1,11 +1,9 @@
 import requests
 import os
-try:
-    # dotenv is optional for runtime; if not installed, proceed without it
-    from dotenv import load_dotenv
-    load_dotenv()
-except Exception:
-    pass
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class APIClient:
     def __init__(self, base_url):

@@ -152,7 +152,7 @@ def fastqc_report(id, filename):
 
     # Create the directory if it doesn't exist
     current_dir = os.getcwd()
-    qc_dir = os.path.join(current_dir, 'qc')
+    qc_dir = os.path.join(current_dir, 'reports')
     os.makedirs(qc_dir, exist_ok=True)
     
     out_path = os.path.join(qc_dir, f'/reports/fastqc_report_{id}.html')
@@ -178,7 +178,7 @@ def fastp_report(id):
 
     # Create the directory if it doesn't exist
     current_dir = os.getcwd()
-    qc_dir = os.path.join(current_dir, 'qc')
+    qc_dir = os.path.join(current_dir, 'reports')
     os.makedirs(qc_dir, exist_ok=True)
     
     out_path = os.path.join(qc_dir, f'/reports/fastp_report_{id}.html')
