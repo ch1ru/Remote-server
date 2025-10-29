@@ -120,6 +120,7 @@ try:
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
+                        time.sleep(0.2)
                         break
                     time.sleep(0.2)
             if choice == "Quality control":
