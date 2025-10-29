@@ -97,11 +97,11 @@ device_menu.render_menu()
 # --- Main loop ---
 try:
     while True:
-        if not GPIO.input(device_menu.BUTTON_B):  # Up
-            device_menu.selected = (device_menu.selected - 1) % len(device_menu.menu_items)
-            device_menu.render_menu()
-        if not GPIO.input(device_menu.BUTTON_A):  # Down
+        if not GPIO.input(device_menu.BUTTON_B):  # Down
             device_menu.selected = (device_menu.selected + 1) % len(device_menu.menu_items)
+            device_menu.render_menu()
+        if not GPIO.input(device_menu.BUTTON_A):  # Up
+            device_menu.selected = (device_menu.selected - 1) % len(device_menu.menu_items)
             device_menu.render_menu()
         if not GPIO.input(device_menu.BUTTON_X):  # Select
             choice = device_menu.menu_items[device_menu.selected]
