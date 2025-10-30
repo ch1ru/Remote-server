@@ -1,0 +1,7 @@
+RPi.GPIO
+displayhatmini
+Pillow
+qrcode
+requests
+pydantic
+dotenv
