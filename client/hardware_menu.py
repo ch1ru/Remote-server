@@ -47,7 +47,7 @@ class DisplayMenu:
             else: 
                 color = (180, 180, 180)
             prefix = "> " if i == self.selected else "  "
-            self.draw.text((30, y), prefix + item, font=self.font, fill=color)
+            self.draw.text((30, y), prefix + item, font=self.font, fill=color, align="center")
             y += 25
         self.display.display()
 
@@ -86,7 +86,7 @@ class DisplayMenu:
     def show_qr(self, img, msg = "Scan QR code"):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
         self.img.paste(img.resize((170, 170)), (75, 60))
-        self.draw.text((20, 20), msg, font=self.font, fill=(255, 255, 255))
+        self.draw.text((20, 20), msg, font=ImageFont.load_default(14), fill=(255, 255, 255))
         self.display.display()
 
     def show_message(self, msg):
