@@ -85,7 +85,7 @@ class DisplayMenu:
 
     def show_qr(self, img, msg = "Scan QR code"):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
-        self.img.paste(img.resize((170, 170)), ((320 - 170) / 2, 60))
+        self.img.paste(img.resize((170, 170)), (75, 60))
         self.draw.text((20, 20), msg, font=self.font, fill=(255, 255, 255))
         self.display.display()
 
