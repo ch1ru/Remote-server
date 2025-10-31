@@ -50,17 +50,17 @@ class DisplayMenu:
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
         self.draw.text((40, 100), msg, font=self.font, fill=(255, 255, 255))
 
-        for i in range(9):
+        for i in range(8):
 
             s1 = 0 if i == 0 else 255
             s2 = 0 if i == 1 else 255
             s3 = 0 if i == 2 else 255
-            s4 = 0 if i == 3 else 255
-            s5 = 0 if i == 4 else 255
-            s6 = 0 if i == 5 else 255          
+            s6 = 0 if i == 3 else 255
+            s9 = 0 if i == 4 else 255
+            s8 = 0 if i == 5 else 255          
             s7 = 0 if i == 6 else 255
-            s8 = 0 if i == 7 else 255
-            s9 = 0 if i == 8 else 255
+            s4 = 0 if i == 7 else 255
+            s5 = 255
 
             # loader square row #1
             self.draw.rectangle((135, 140, 145, 150), (s1, s1, s1))
@@ -113,7 +113,7 @@ try:
                 task_id = fastp(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
                 
-                wait_for_task(task_id, interval=1, verbose=True, callback=loader, args=("Trimming reads...",))
+                wait_for_task(task_id, interval=0.5, verbose=True, callback=loader, args=("Trimming reads...",))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
                 device_menu.show_qr(img)
