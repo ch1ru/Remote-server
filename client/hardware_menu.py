@@ -23,6 +23,7 @@ class DisplayMenu:
         self.BUTTON_Y = 24
 
         self.font = font
+        self.title_font = ImageFont.truetype("arial.ttf", 24)
         self.menu_items = menu_items
         self.title = title
         self.selected = 0
@@ -37,10 +38,15 @@ class DisplayMenu:
 
     def render_menu(self):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
-        self.draw.text((20, 20), self.title, font=self.font, fill=(0, 0, 255))
+        self.draw.text((20, 20), self.title, font=self.font, fill=(255, 255, 255))
         y = 50
         for i, item in enumerate(self.menu_items):
-            color = (0, 255, 0) if i == self.selected else (180, 180, 180)
+            if i == self.selected:
+                color = (0, 255, 0) 
+            elif item == "Exit":
+                color = (255, 0, 0)
+            else: 
+                color = (180, 180, 180)
             prefix = "> " if i == self.selected else "  "
             self.draw.text((30, y), prefix + item, font=self.font, fill=color)
             y += 30
@@ -78,8 +84,10 @@ class DisplayMenu:
             self.display.display()
             time.sleep(0.1)
 
-    def show_qr(self, img):
-        self.img.paste(img.resize((200, 200)), (60, 20))
+    def show_qr(self, img, msg = "Scan QR code"):
+        self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
+        self.img.paste(img.resize((160, 160)), (100, 40))
+        self.draw.text((40, 100), msg, font=self.font, fill=(255, 255, 255))
         self.display.display()
 
     def show_message(self, msg):
@@ -116,7 +124,7 @@ try:
                 wait_for_task(task_id, interval=0.5, verbose=True, callback=loader, args=("Trimming reads...",))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
-                device_menu.show_qr(img)
+                device_menu.show_qr(img, msg="See your fastp report")
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
