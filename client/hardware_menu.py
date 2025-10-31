@@ -133,12 +133,13 @@ try:
             if choice == "Quality control":
                 task_id = fastqc(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running quality control...",))
+
+
                 # show just R1 report as example
                 report_url = fastqc_report(id, filename='trimmed_anc_R1')
                 # wait for fastqc to finish, then generate QR once
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running quality control...",))
 
-                report_url = fastqc_report(id)
                 img = qrcode.make(report_url)
                 device_menu.show_qr(img, msg=f"See fastqc report at \n{report_url}")
                 while True:
