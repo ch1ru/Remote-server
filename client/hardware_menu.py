@@ -83,10 +83,13 @@ class DisplayMenu:
             self.display.display()
             time.sleep(0.1)
 
-    def show_qr(self, img, msg = "Scan QR code"):
+    def show_qr(self, img, msgs):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
         self.img.paste(img.resize((170, 170)), (75, 60))
-        self.draw.text((20, 20), msg, font=ImageFont.load_default(14), fill=(255, 255, 255))
+        y = 10
+        for msg in msgs:
+            self.draw.text((20, y), msg, font=ImageFont.load_default(14), fill=(255, 255, 255))
+            y += 15
         self.display.display()
 
     def show_message(self, msg):
@@ -123,7 +126,7 @@ try:
                 wait_for_task(task_id, interval=0.5, verbose=True, callback=loader, args=("Trimming reads...",))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
-                device_menu.show_qr(img, msg=f"See fastp report at {report_url}")
+                device_menu.show_qr(img, msgs=["See fastp report at:", {report_url}])
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
