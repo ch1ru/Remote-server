@@ -4,7 +4,9 @@ from PIL import Image, ImageDraw, ImageFont
 import time
 
 import qrcode
-from helper import *
+
+from client.helper import assemble, bwa_index, bwa_mem, fastp, fastp_report, fastqc, fastqc_report, gen_igv_url, samtools_convert, wait_for_task
+
 
 
 class DisplayMenu:
