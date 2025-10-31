@@ -59,7 +59,7 @@ def wait_for_task(
             print(f"Waiting for task {task_id} to complete... (status={status})")
         if callback is not None:
             callback(*args)
-        time.sleep(interval)
+        time.sleep(interval) # set this to 0 because we have our own loader
 
 def gen_igv_url(id: str) -> str:
 

@@ -53,7 +53,7 @@ class DisplayMenu:
 
     def show_loader(self, msg):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
-        self.draw.text((40, 120), msg, font=self.font, fill=(255, 255, 255))
+        self.draw.text((40, 100), msg, font=self.font, fill=(255, 255, 255))
 
         for i in range(8):
 
@@ -81,25 +81,29 @@ class DisplayMenu:
             self.draw.rectangle((165, 160, 170, 165), (s9, s9, s9))
 
             self.display.display()
-            time.sleep(0.1)
+            time.sleep(0.125)
 
     def show_qr(self, img, msg = "Scan QR code"):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
         self.img.paste(img.resize((170, 170)), (75, 60))
-        self.draw.text((20, 20), msg, font=ImageFont.load_default(14), fill=(255, 255, 255))
+        self.draw.text((20, 20), msg, font=ImageFont.load_default(13), fill=(255, 255, 255))
         self.display.display()
 
     def show_message(self, msg):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
         self.draw.text((40, 100), msg, font=self.font, fill=(255, 255, 255))
+        self.display.display()
 
     def set_backlight(self, brightness):
         self.display.set_backlight(brightness)
 
 
 id = "test_yyy"
-device_menu = DisplayMenu(title=id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "IGV Viewer", "Exit"])
+device_menu = DisplayMenu(title=id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "Exit"])
 device_menu.render_menu()
+
+# wait for fastp to finish, then generate QR once
+loader = device_menu.show_loader
 
 # --- Main loop ---
 try:
@@ -114,13 +118,9 @@ try:
             choice = device_menu.menu_items[device_menu.selected]
             if choice == "Trim reads":
 
-                # wait for fastp to finish, then generate QR once
-                loader = device_menu.show_loader
-
                 task_id = fastp(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
-                
-                wait_for_task(task_id, interval=0.5, verbose=True, callback=loader, args=("Trimming reads...",))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Trimming reads...",))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
                 device_menu.show_qr(img, msg=f"See fastp report at \n{report_url}")
@@ -133,47 +133,54 @@ try:
             if choice == "Quality control":
                 task_id = fastqc(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
-                # wait for fastqc to finish, then generate QR once
-                wait_for_task(task_id, interval=1, verbose=True)
                 # show just R1 report as example
                 report_url = fastqc_report(id, filename='trimmed_anc_R1')
+                # wait for fastqc to finish, then generate QR once
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running quality control...",))
+
+                report_url = fastqc_report(id)
                 img = qrcode.make(report_url)
-                device_menu.show_qr(img)
+                device_menu.show_qr(img, msg=f"See fastqc report at \n{report_url}")
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
+                        time.sleep(0.2)
                         break
                     time.sleep(0.2)
             if choice == "Assembly":
                 task_id = assemble(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
                 # wait for assembly/fastqc to finish
-                wait_for_task(task_id, interval=1, verbose=True)
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Assembling reads...",))
                 
-                device_menu.show_message("Assembly Complete!")
+                device_menu.show_message("Mapping Complete!")
+                time.sleep(2)
+
+                device_menu.render_menu()
+                
             if choice == "Mappings":
-                bwa_index([f'/workspace/{id}/assembly/scaffolds.fasta'], id)
-                bwa_mem([f'/workspace/{id}/assembly/scaffolds.fasta', f'/workspace/{id}/trimmed/trimmed_anc_R1.fastq.gz', f'/workspace/{id}/trimmed/trimmed_anc_R2.fastq.gz'], id, out='anc.sam')
-                samtools_convert('anc', 'anc', id)
-            if choice == "IGV Viewer":
                 task_id = bwa_index([f'/workspace/{id}/assembly/scaffolds.fasta'], id)
-
-                wait_for_task(task_id, interval=1, verbose=True)
-
-                task_id = bwa_mem([f'/workspace/{id}/assembly/scaffolds.fasta', f'/workspace/{id}/trimmed/trimmed_anc_R1.fastq.gz', f'/workspace/{id}/trimmed/trimmed_anc_R2.fastq.gz'], id, out='anc.sam')
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Indexing files...",))
                 
-                wait_for_task(task_id, interval=1, verbose=True)
+                task_id = bwa_mem([f'/workspace/{id}/assembly/scaffolds.fasta', f'/workspace/{id}/trimmed/trimmed_anc_R1.fastq.gz', f'/workspace/{id}/trimmed/trimmed_anc_R2.fastq.gz'], id, out='anc.sam')
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running alignment...",))
                 
                 task_id = samtools_convert('anc', 'anc', id)
-
-                wait_for_task(task_id, interval=1, verbose=True)
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Converting BAM files...",))
+           
+                device_menu.show_message("Mapping Complete!")
+                time.sleep(2)
 
                 igv_url = gen_igv_url(id)
                 img = qrcode.make(igv_url)
-                img.save(f'/qr/igv_{id}_qrcode.png')
+                device_menu.show_qr(img, msg=f"View genome in IGV: \n{igv_url}")
 
-                device_menu.display.img.show(img)
-                device_menu.render_menu()
+                while True:
+                    if not GPIO.input(device_menu.BUTTON_X):
+                        device_menu.render_menu()
+                        time.sleep(0.2)
+                        break
+                    time.sleep(0.2)
 
             if choice == "Exit":
                 break
