@@ -8,7 +8,6 @@ import time
 from http.server import SimpleHTTPRequestHandler
 import client as client_module
 from models.params import spadesParams, fastpParams, fastqcParams
-from hardware_menu import DisplayMenu
 import urllib.parse
 
 api_client = client_module.api_client
@@ -24,9 +23,9 @@ def wait_for_task(
     success_state: str = "success", 
     failure_state: str = "failure", 
     interval: float = 1.0, 
+    callback=None,
+    args=(),
     timeout: float | None = None, 
-    device: DisplayMenu | None = None,
-    loader_msg: str = "Processing...",
     verbose: bool = True):
     """Block until a task reaches the success_state.
 
@@ -58,9 +57,8 @@ def wait_for_task(
             raise TimeoutError(f"Timeout waiting for task {task_id}; last status={status}")
         if verbose:
             print(f"Waiting for task {task_id} to complete... (status={status})")
-
-        if device is not None:
-            device.show_loader(loader_msg)
+        if callback is not None:
+            callback(*args)
         time.sleep(interval)
 
 def gen_igv_url(id: str) -> str:

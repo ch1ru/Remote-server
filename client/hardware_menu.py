@@ -4,9 +4,7 @@ from PIL import Image, ImageDraw, ImageFont
 import time
 
 import qrcode
-
-from helper import assemble, bwa_index, bwa_mem, fastp, fastp_report, fastqc, fastqc_report, gen_igv_url, samtools_convert, wait_for_task
-
+from helper import *
 
 
 class DisplayMenu:
@@ -109,10 +107,13 @@ try:
             choice = device_menu.menu_items[device_menu.selected]
             if choice == "Trim reads":
 
+                # wait for fastp to finish, then generate QR once
+                loader = device_menu.show_loader
+
                 task_id = fastp(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
                 
-                wait_for_task(task_id, interval=1, verbose=True, device=device_menu, loader_msg="Trimming reads...")
+                wait_for_task(task_id, interval=1, verbose=True, callback=loader, args=("Trimming reads...",))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
                 device_menu.show_qr(img)
