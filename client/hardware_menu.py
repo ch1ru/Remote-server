@@ -23,7 +23,6 @@ class DisplayMenu:
         self.BUTTON_Y = 24
 
         self.font = font
-        self.title_font = ImageFont.truetype("arial.ttf", 24)
         self.menu_items = menu_items
         self.title = title
         self.selected = 0
@@ -38,7 +37,7 @@ class DisplayMenu:
 
     def render_menu(self):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
-        self.draw.text((20, 20), self.title, font=self.font, fill=(255, 255, 255))
+        self.draw.text((20, 20), self.title, font=ImageFont.load_default(24), fill=(255, 255, 255))
         y = 50
         for i, item in enumerate(self.menu_items):
             if i == self.selected:
@@ -49,7 +48,7 @@ class DisplayMenu:
                 color = (180, 180, 180)
             prefix = "> " if i == self.selected else "  "
             self.draw.text((30, y), prefix + item, font=self.font, fill=color)
-            y += 30
+            y += 25
         self.display.display()
 
     def show_loader(self, msg):
