@@ -8,7 +8,7 @@ from helper import *
 
 
 class DisplayMenu:
-    def __init__(self, menu_items, title, backlight=1.0, font=ImageFont.load_default()):
+    def __init__(self, menu_items, title, backlight=1.0, font=ImageFont.load_default(16)):
 
         self.img = Image.new("RGB", (320, 240), (0, 0, 0))
         self.draw = ImageDraw.Draw(self.img)
@@ -38,7 +38,7 @@ class DisplayMenu:
     def render_menu(self):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
         self.draw.text((20, 20), self.title, font=ImageFont.load_default(24), fill=(255, 255, 255))
-        y = 50
+        y = 70
         for i, item in enumerate(self.menu_items):
             if i == self.selected:
                 color = (0, 255, 0) 
