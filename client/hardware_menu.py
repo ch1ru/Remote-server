@@ -53,7 +53,7 @@ class DisplayMenu:
 
     def show_loader(self, msg):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
-        self.draw.text((40, 100), msg, font=self.font, fill=(255, 255, 255))
+        self.draw.text((40, 120), msg, font=self.font, fill=(255, 255, 255))
 
         for i in range(8):
 
@@ -68,28 +68,25 @@ class DisplayMenu:
             s5 = 255
 
             # loader square row #1
-            self.draw.rectangle((135, 140, 145, 150), (s1, s1, s1))
-            self.draw.rectangle((155, 140, 165, 150), (s2, s2, s2))
-            self.draw.rectangle((175, 140, 185, 150), (s3, s3, s3))
+            self.draw.rectangle((145, 140, 150, 145), (s1, s1, s1))
+            self.draw.rectangle((155, 140, 160, 145), (s2, s2, s2))
+            self.draw.rectangle((165, 140, 170, 145), (s3, s3, s3))
             # loader square row #2
-            self.draw.rectangle((135, 160, 145, 170), (s4, s4, s4))
-            self.draw.rectangle((155, 160, 165, 170), (s5, s5, s5))
-            self.draw.rectangle((175, 160, 185, 170), (s6, s6, s6))
+            self.draw.rectangle((145, 150, 150, 155), (s4, s4, s4))
+            self.draw.rectangle((155, 150, 160, 155), (s5, s5, s5))
+            self.draw.rectangle((165, 150, 170, 155), (s6, s6, s6))
             # loader square row #3
-            self.draw.rectangle((135, 180, 145, 190), (s7, s7, s7))
-            self.draw.rectangle((155, 180, 165, 190), (s8, s8, s8))
-            self.draw.rectangle((175, 180, 185, 190), (s9, s9, s9))
+            self.draw.rectangle((145, 160, 150, 165), (s7, s7, s7))
+            self.draw.rectangle((155, 160, 160, 165), (s8, s8, s8))
+            self.draw.rectangle((165, 160, 170, 165), (s9, s9, s9))
 
             self.display.display()
             time.sleep(0.1)
 
-    def show_qr(self, img, msgs):
+    def show_qr(self, img, msg = "Scan QR code"):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
         self.img.paste(img.resize((170, 170)), (75, 60))
-        y = 10
-        for msg in msgs:
-            self.draw.text((20, y), msg, font=ImageFont.load_default(14), fill=(255, 255, 255))
-            y += 15
+        self.draw.text((20, 20), msg, font=ImageFont.load_default(14), fill=(255, 255, 255))
         self.display.display()
 
     def show_message(self, msg):
@@ -126,7 +123,7 @@ try:
                 wait_for_task(task_id, interval=0.5, verbose=True, callback=loader, args=("Trimming reads...",))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
-                device_menu.show_qr(img, msgs=["See fastp report at:", {report_url}])
+                device_menu.show_qr(img, msg=f"See fastp report at \n{report_url}")
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
