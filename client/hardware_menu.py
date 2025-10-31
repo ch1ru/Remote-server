@@ -107,13 +107,10 @@ try:
             choice = device_menu.menu_items[device_menu.selected]
             if choice == "Trim reads":
 
-                # wait for fastp to finish, then generate QR once
-                device_menu.show_loader("Trimming reads")
-
                 task_id = fastp(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
                 
-                wait_for_task(task_id, interval=1, verbose=True)
+                wait_for_task(task_id, interval=1, verbose=True, device=device_menu, loader_msg="Trimming reads...")
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
                 device_menu.show_qr(img)
