@@ -9,7 +9,7 @@ from helper import *
 
 
 class DisplayMenu:
-    def __init__(self, menu_items, title, backlight=1.0, font=ImageFont.load_default(16)):
+    def __init__(self, menu_items, title, backlight=1.0, font=ImageFont.load_default(18)):
 
         self.img = Image.new("RGB", (320, 240), (0, 0, 0))
         self.draw = ImageDraw.Draw(self.img)
