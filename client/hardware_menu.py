@@ -150,7 +150,7 @@ try:
 
                 task_id = fastp(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Trimming reads...", 97, 102))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Trimming reads...", 96, 102))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
                 device_menu.show_qr(img, msg=f"See the fastp report in your browser:")
@@ -175,7 +175,7 @@ try:
 
                 task_id = fastqc(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running quality control...", 70, 102))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running quality control...", 68, 102))
 
 
                 # show just R1 report as example
@@ -231,7 +231,7 @@ try:
                 wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Indexing files...", 102, 102))
                 
                 task_id = bwa_mem([f'/workspace/{id}/assembly/scaffolds.fasta', f'/workspace/{id}/trimmed/trimmed_anc_R1.fastq.gz', f'/workspace/{id}/trimmed/trimmed_anc_R2.fastq.gz'], id, out='anc.sam')
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running alignment...", 90, 102))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running alignment...", 88, 102))
                 
                 task_id = samtools_convert('anc', 'anc', id)
                 wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Converting BAM files...", 88, 102))
@@ -241,7 +241,7 @@ try:
 
                 igv_url = gen_igv_url(id)
                 img = qrcode.make(igv_url)
-                device_menu.show_qr(img, msg=f"View genome in IGV:")
+                device_menu.show_qr(img, msg=f"View genome in IGV browser:")
 
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
