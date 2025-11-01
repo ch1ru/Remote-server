@@ -100,10 +100,10 @@ class DisplayMenu:
         # This would be input via buttons to toggle options
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
         self.draw.text((20, 20), title, font=ImageFont.load_default(24), fill=(255, 255, 255))
-        self.draw.text((20, 50), "(Press X to start)", font=self.font, fill=(37, 150, 190))
+        self.draw.text((20, 50), "(Press X to start)", font=self.font, fill=(180, 180, 180))
         y = 80
         for key, value in params.items():
-            color = (180, 180, 180)
+            color = (103, 190, 217)
             line = f"{key}: {value}"
             self.draw.text((20, y), line, font=self.font, fill=color, align="center")
             y += 25
@@ -141,7 +141,7 @@ try:
                         "detect_adapter_for_pe": True, 
                         "overrepresentation_analysis": True, 
                         "correction": True
-                    }, title="fastp options\nPress X to start")
+                    }, title="fastp options")
                     time.sleep(0.2)
                     if not GPIO.input(device_menu.BUTTON_X):
                         break
