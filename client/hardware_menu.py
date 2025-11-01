@@ -1,3 +1,4 @@
+import numbers
 import RPi.GPIO as GPIO
 from displayhatmini import DisplayHATMini as Display
 from PIL import Image, ImageDraw, ImageFont
@@ -94,6 +95,21 @@ class DisplayMenu:
         self.draw.text((40, 100), msg, font=self.font, fill=(255, 255, 255))
         self.display.display()
 
+    def param_menu(self, params: dict, title="Parameters\nPress X to start"):
+        # TODO: Make interactive, this is just a placeholder to show params
+        # This would be input via buttons to toggle options
+        self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
+        self.draw.text((20, 20), title, font=ImageFont.load_default(16), fill=(255, 255, 255))
+        y = 70
+        for key, value in params.items():
+            color = (180, 180, 180)
+            if not isinstance(value, numbers.Number):
+                value = 'ON' if value else 'OFF'
+            line = f"{key}: {value}"
+            self.draw.text((30, y), line, font=self.font, fill=color, align="center")
+            y += 25
+        self.display.display()
+
     def set_backlight(self, brightness):
         self.display.set_backlight(brightness)
 
@@ -117,6 +133,17 @@ try:
         if not GPIO.input(device_menu.BUTTON_X):  # Select
             choice = device_menu.menu_items[device_menu.selected]
             if choice == "Trim reads":
+
+                while True:
+                    device_menu.param_menu({
+                        "cut_right": True, 
+                        "detect_adapter_for_pe": True, 
+                        "overrepresentation_analysis": True, 
+                        "correction": True
+                    }, title="fastp options\nPress X to start")
+                    time.sleep(0.2)
+                    if not GPIO.input(device_menu.BUTTON_X):
+                        break
 
                 task_id = fastp(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
