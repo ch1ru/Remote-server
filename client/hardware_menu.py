@@ -95,18 +95,16 @@ class DisplayMenu:
         self.draw.text((40, 100), msg, font=self.font, fill=(255, 255, 255))
         self.display.display()
 
-    def param_menu(self, params: dict, title="Parameters\nPress X to start"):
+    def param_menu(self, params: dict, title="Parameters\n(Press X to start)"):
         # TODO: Make interactive, this is just a placeholder to show params
         # This would be input via buttons to toggle options
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
-        self.draw.text((20, 20), title, font=ImageFont.load_default(16), fill=(255, 255, 255))
-        y = 70
+        self.draw.text((20, 20), title, font=ImageFont.load_default(24), fill=(255, 255, 255))
+        y = 80
         for key, value in params.items():
             color = (180, 180, 180)
-            if not isinstance(value, numbers.Number):
-                value = 'ON' if value else 'OFF'
             line = f"{key}: {value}"
-            self.draw.text((30, y), line, font=self.font, fill=color, align="center")
+            self.draw.text((20, y), line, font=self.font, fill=color, align="center")
             y += 25
         self.display.display()
 

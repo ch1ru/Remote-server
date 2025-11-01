@@ -101,7 +101,7 @@ def upload(filenames: list[str], id):
     print(response)
     return response
 
-def fastp(params: fastpParams, filenames: list[str], id):
+def fastp(filenames: list[str], id):
 
     params = fastpParams(
         o=f"/workspace/{id}/trimmed/trimmed_{os.path.basename(filenames[0])}",
