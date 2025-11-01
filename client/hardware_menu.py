@@ -87,7 +87,7 @@ class DisplayMenu:
     def show_qr(self, img, msg = "Scan QR code"):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
         self.img.paste(img.resize((170, 170)), (75, 60))
-        self.draw.text((20, 20), msg, font=ImageFont.load_default(16), fill=(255, 255, 255))
+        self.draw.text((15, 20), msg, font=ImageFont.load_default(16), fill=(255, 255, 255))
         self.display.display()
 
     def show_message(self, msg, margin_left=40, margin_top=100):
@@ -103,7 +103,7 @@ class DisplayMenu:
         self.draw.text((20, 50), "(Press X to start)", font=self.font, fill=(180, 180, 180))
         y = 80
         for key, value in params.items():
-            color = (103, 190, 217)
+            color = (39, 245, 245)
             line = f"{key}: {value}"
             self.draw.text((20, y), line, font=self.font, fill=color, align="center")
             y += 25
@@ -151,7 +151,7 @@ try:
                 wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Trimming reads...", 98, 110))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
-                device_menu.show_qr(img, msg=f"See fastp report in your browser:")
+                device_menu.show_qr(img, msg=f"See the fastp report in your browser:")
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
@@ -181,7 +181,7 @@ try:
                 # wait for fastqc to finish, then generate QR once
 
                 img = qrcode.make(report_url)
-                device_menu.show_qr(img, msg=f"See fastqc report in your browser:")
+                device_menu.show_qr(img, msg=f"See the fastqc report in your browser:")
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
