@@ -1,11 +1,17 @@
+import os
 from pathlib import Path
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import FileResponse, RedirectResponse
 
 router = APIRouter(
-    prefix="/workspace",
+    prefix="/api/workspace",
     tags=['Quality Control Reads']
 )
+
+@router.get("/")
+async def get_workspaces():
+    workspaces = [f for f in os.listdir('/workspace') if os.path.isdir(os.path.join('/workspace', f))]
+    return workspaces
 
 @router.get("/{full_path:path}")
 async def serve_workspace(full_path: str = ""):

@@ -117,8 +117,29 @@ class DisplayMenu:
         self.display.set_backlight(brightness)
 
 
-id = "test_yyy"
-device_menu = DisplayMenu(title=id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "Exit"])
+# --- Select workspace ---
+
+def workspace_menu():
+    workspace_menu = DisplayMenu(title="Choose workspace", menu_items=get_workspaces())
+    selected_id = workspace_menu.menu_items[workspace_menu.selected]
+    workspace_menu.render_menu()
+
+    while True:
+        if not GPIO.input(workspace_menu.BUTTON_B):
+            workspace_menu.selected = (workspace_menu.selected + 1) % len(workspace_menu.menu_items)
+            workspace_menu.render_menu()
+        if not GPIO.input(workspace_menu.BUTTON_A):
+            workspace_menu.selected = (workspace_menu.selected - 1) % len(workspace_menu.menu_items)
+            workspace_menu.render_menu()
+        if not GPIO.input(workspace_menu.BUTTON_X):
+            selected_id = workspace_menu.menu_items[workspace_menu.selected]
+            return selected_id
+        time.sleep(0.05)
+    
+selected_id = workspace_menu()
+
+
+device_menu = DisplayMenu(title=selected_id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "Exit"])
 device_menu.render_menu()
 
 # wait for fastp to finish, then generate QR once
@@ -246,13 +267,12 @@ try:
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
-                        time.sleep(0.2)
+                        time.sleep(0.05)
                         break
-                    time.sleep(0.2)
+                    time.sleep(0.05)
 
             if choice == "Exit":
-                break
-            time.sleep(0.3)
+                workspace_menu()
         time.sleep(0.05)
 except KeyboardInterrupt:
     pass

@@ -13,6 +13,10 @@ import urllib.parse
 api_client = client_module.api_client
 celery_client = client_module.celery_client
 
+def get_workspaces():
+    response = api_client.get(endpoint=f'/api/workspace')
+    return response
+
 def poll_for_result(task_id: str) -> str:
     response = celery_client.get(endpoint=f'api/tasks', params={})
     status = response[task_id]['state']
@@ -64,10 +68,10 @@ def wait_for_task(
 def gen_igv_url(id: str) -> str:
 
     # URLs
-    genome_url = f"http://localhost:5000/workspace/{id}/assembly/scaffolds.fasta"
-    fai_url = f"http://localhost:5000/workspace/{id}/assembly/scaffolds.fasta.fai"
-    bam_url = f"http://localhost:5000/workspace/{id}/mapping/anc.sorted.dedup.q20.bam"
-    bai_url = f"http://localhost:5000/workspace/{id}/mapping/anc.sorted.dedup.q20.bam.bai"
+    genome_url = f"http://localhost:5000/api/workspace/{id}/assembly/scaffolds.fasta"
+    fai_url = f"http://localhost:5000/api/workspace/{id}/assembly/scaffolds.fasta.fai"
+    bam_url = f"http://localhost:5000/api/workspace/{id}/mapping/anc.sorted.dedup.q20.bam"
+    bai_url = f"http://localhost:5000/api/workspace/{id}/mapping/anc.sorted.dedup.q20.bam.bai"
 
     # Track JSON
     track_json = f'[{{"name":"Ancestor","url":"{bam_url}",indexURL:"{bai_url}","type":"alignment"}}]'

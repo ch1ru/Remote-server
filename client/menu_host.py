@@ -60,6 +60,10 @@ elif args.command == 'map':
     img = qrcode.make(igv_url)
     img.save(f'/qr/igv_{id}_qrcode.png')
 
+elif args.command == "workspaces":
+    workspaces = get_workspaces()
+    print(workspaces)
+
 
 else:
     print("Unknown command")
