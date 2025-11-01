@@ -159,6 +159,19 @@ try:
                         break
                     time.sleep(0.2)
             if choice == "Quality control":
+
+                while True:
+                    device_menu.param_menu({
+                        "min_length": "DEFAULT", 
+                        "contaminants": "NONE", 
+                        "adapters": "NONE", 
+                        "limits": "NONE",
+                        "kmers": 7
+                    }, title="fastqc options")
+                    time.sleep(0.2)
+                    if not GPIO.input(device_menu.BUTTON_X):
+                        break
+
                 task_id = fastqc(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
                 wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running quality control...",))
@@ -177,6 +190,21 @@ try:
                         break
                     time.sleep(0.2)
             if choice == "Assembly":
+
+                while True:
+                    device_menu.param_menu({
+                        "plasmid": False, 
+                        "bio": False, 
+                        "rna": False, 
+                        "rnaviral": False,
+                        "corona": False,
+                        "iontorrent": False,
+                        "nanopore": False,
+                    }, title="spades (for assembly) options")
+                    time.sleep(0.2)
+                    if not GPIO.input(device_menu.BUTTON_X):
+                        break
+
                 task_id = assemble(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
                 # wait for assembly/fastqc to finish
@@ -188,6 +216,16 @@ try:
                 device_menu.render_menu()
                 
             if choice == "Mappings":
+
+                while True:
+                    device_menu.param_menu({
+                        "index_file": f'/workspace/{id}/assembly/scaffolds.fasta', 
+                        "BAM target": "anc"
+                    }, title="BWA (for indexing/mapping) options")
+                    time.sleep(0.2)
+                    if not GPIO.input(device_menu.BUTTON_X):
+                        break
+
                 task_id = bwa_index([f'/workspace/{id}/assembly/scaffolds.fasta'], id)
                 wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Indexing files...",))
                 
