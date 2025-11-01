@@ -234,7 +234,7 @@ try:
                 task_id = samtools_convert('anc', 'anc', id)
                 wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Converting BAM files...", 88, 105))
            
-                device_menu.show_message("Mapping Complete!", 90, 105)
+                device_menu.show_message("Mapping Complete!", 88, 105)
                 time.sleep(2)
 
                 igv_url = gen_igv_url(id)
