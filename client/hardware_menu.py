@@ -45,7 +45,7 @@ class DisplayMenu:
                 color = (0, 255, 0) 
             else: 
                 color = (180, 180, 180)
-                
+
             if item == "Exit":
                 color = (255, 0, 0)
                 y += 25
@@ -150,7 +150,7 @@ try:
 
                 task_id = fastp(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Trimming reads...", 98, 105))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Trimming reads...", 97, 102))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
                 device_menu.show_qr(img, msg=f"See the fastp report in your browser:")
@@ -175,7 +175,7 @@ try:
 
                 task_id = fastqc(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running quality control...", 70, 105))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running quality control...", 70, 102))
 
 
                 # show just R1 report as example
@@ -209,9 +209,9 @@ try:
                 task_id = assemble(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
                 # wait for assembly/fastqc to finish
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Assembling reads...", 88, 105))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Assembling reads...", 87, 102))
                 
-                device_menu.show_message("Mapping Complete!", 90, 105)
+                device_menu.show_message("Mapping Complete!", 90, 102)
                 time.sleep(2)
 
                 device_menu.render_menu()
@@ -228,15 +228,15 @@ try:
                         break
 
                 task_id = bwa_index([f'/workspace/{id}/assembly/scaffolds.fasta'], id)
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Indexing files...", 102, 105))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Indexing files...", 102, 102))
                 
                 task_id = bwa_mem([f'/workspace/{id}/assembly/scaffolds.fasta', f'/workspace/{id}/trimmed/trimmed_anc_R1.fastq.gz', f'/workspace/{id}/trimmed/trimmed_anc_R2.fastq.gz'], id, out='anc.sam')
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running alignment...", 90, 105))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running alignment...", 90, 102))
                 
                 task_id = samtools_convert('anc', 'anc', id)
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Converting BAM files...", 88, 105))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Converting BAM files...", 88, 102))
            
-                device_menu.show_message("Mapping Complete!", 88, 105)
+                device_menu.show_message("Mapping Complete!", 88, 102)
                 time.sleep(2)
 
                 igv_url = gen_igv_url(id)
