@@ -52,9 +52,9 @@ class DisplayMenu:
             y += 25
         self.display.display()
 
-    def show_loader(self, msg):
+    def show_loader(self, msg, margin_left = 40, margin_top = 100):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
-        self.draw.text((40, 100), msg, font=self.font, fill=(255, 255, 255))
+        self.draw.text((margin_left, margin_top), msg, font=self.font, fill=(255, 255, 255))
 
         for i in range(8):
 
@@ -90,9 +90,9 @@ class DisplayMenu:
         self.draw.text((20, 20), msg, font=ImageFont.load_default(13), fill=(255, 255, 255))
         self.display.display()
 
-    def show_message(self, msg):
+    def show_message(self, msg, margin_left=40, margin_top=100):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
-        self.draw.text((40, 100), msg, font=self.font, fill=(255, 255, 255))
+        self.draw.text((margin_left, margin_top), msg, font=self.font, fill=(255, 255, 255))
         self.display.display()
 
     def param_menu(self, params: dict, title="Parameters"):
@@ -148,7 +148,7 @@ try:
 
                 task_id = fastp(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Trimming reads...",))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Trimming reads...", 100, 120))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
                 device_menu.show_qr(img, msg=f"See fastp report at \n{report_url}")
@@ -165,7 +165,6 @@ try:
                         "min_length": "DEFAULT", 
                         "contaminants": "NONE", 
                         "adapters": "NONE", 
-                        "limits": "NONE",
                         "kmers": 7
                     }, title="fastqc options")
                     time.sleep(0.2)
@@ -174,7 +173,7 @@ try:
 
                 task_id = fastqc(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running quality control...",))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running quality control...", 50, 120))
 
 
                 # show just R1 report as example
@@ -200,7 +199,7 @@ try:
                         "corona": False,
                         "iontorrent": False,
                         "nanopore": False,
-                    }, title="spades (for assembly) options")
+                    }, title="spades options")
                     time.sleep(0.2)
                     if not GPIO.input(device_menu.BUTTON_X):
                         break
@@ -208,9 +207,9 @@ try:
                 task_id = assemble(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
                 # wait for assembly/fastqc to finish
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Assembling reads...",))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Assembling reads...", 100, 120))
                 
-                device_menu.show_message("Mapping Complete!")
+                device_menu.show_message("Mapping Complete!", 100, 120)
                 time.sleep(2)
 
                 device_menu.render_menu()
@@ -219,7 +218,7 @@ try:
 
                 while True:
                     device_menu.param_menu({
-                        "index_file": f'/workspace/{id}/assembly/scaffolds.fasta', 
+                        "index_file": f'/workspace/{id}/...', 
                         "BAM target": "anc"
                     }, title="BWA (for indexing/mapping) options")
                     time.sleep(0.2)
@@ -227,15 +226,15 @@ try:
                         break
 
                 task_id = bwa_index([f'/workspace/{id}/assembly/scaffolds.fasta'], id)
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Indexing files...",))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Indexing files...", 100, 120))
                 
                 task_id = bwa_mem([f'/workspace/{id}/assembly/scaffolds.fasta', f'/workspace/{id}/trimmed/trimmed_anc_R1.fastq.gz', f'/workspace/{id}/trimmed/trimmed_anc_R2.fastq.gz'], id, out='anc.sam')
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running alignment...",))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Running alignment...", 100, 120))
                 
                 task_id = samtools_convert('anc', 'anc', id)
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Converting BAM files...",))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Converting BAM files...", 100, 120))
            
-                device_menu.show_message("Mapping Complete!")
+                device_menu.show_message("Mapping Complete!", 100, 120)
                 time.sleep(2)
 
                 igv_url = gen_igv_url(id)
