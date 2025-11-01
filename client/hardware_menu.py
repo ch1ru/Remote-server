@@ -208,7 +208,7 @@ try:
                 task_id = assemble(['anc_R1.fastq.gz', 'anc_R2.fastq.gz'], id)
 
                 # wait for assembly/fastqc to finish
-                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Assembling reads...", 90, 105))
+                wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Assembling reads...", 88, 105))
                 
                 device_menu.show_message("Mapping Complete!", 90, 105)
                 time.sleep(2)
