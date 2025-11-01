@@ -107,7 +107,7 @@ class DisplayMenu:
         for key, value in params.items():
             color = (39, 245, 245)
             line = f"{key}: {value}"
-            self.draw.text((20, y), line, font=self.font, fill=color, align="center")
+            self.draw.text((20, y), line, font=ImageFont.load_default(16), fill=color, align="center")
             y += 25
 
         self.draw.text((20, y+25), "<Back", font=self.font, fill=(180, 180, 180))
