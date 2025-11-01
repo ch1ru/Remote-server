@@ -87,7 +87,7 @@ class DisplayMenu:
     def show_qr(self, img, msg = "Scan QR code"):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))
         self.img.paste(img.resize((170, 170)), (75, 60))
-        self.draw.text((20, 20), msg, font=ImageFont.load_default(13), fill=(255, 255, 255))
+        self.draw.text((20, 20), msg, font=ImageFont.load_default(16), fill=(255, 255, 255))
         self.display.display()
 
     def show_message(self, msg, margin_left=40, margin_top=100):
@@ -151,7 +151,7 @@ try:
                 wait_for_task(task_id, interval=0, verbose=True, callback=loader, args=("Trimming reads...", 98, 110))
                 report_url = fastp_report(id)
                 img = qrcode.make(report_url)
-                device_menu.show_qr(img, msg=f"See fastp report at \n{report_url}")
+                device_menu.show_qr(img, msg=f"See fastp report in your browser:")
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
@@ -181,7 +181,7 @@ try:
                 # wait for fastqc to finish, then generate QR once
 
                 img = qrcode.make(report_url)
-                device_menu.show_qr(img, msg=f"See fastqc report at \n{report_url}")
+                device_menu.show_qr(img, msg=f"See fastqc report in your browser:")
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
                         device_menu.render_menu()
@@ -239,7 +239,7 @@ try:
 
                 igv_url = gen_igv_url(id)
                 img = qrcode.make(igv_url)
-                device_menu.show_qr(img, msg=f"View genome in IGV: \n{igv_url}")
+                device_menu.show_qr(img, msg=f"View genome in IGV:")
 
                 while True:
                     if not GPIO.input(device_menu.BUTTON_X):
