@@ -43,11 +43,12 @@ class DisplayMenu:
         for i, item in enumerate(self.menu_items):
             if i == self.selected:
                 color = (0, 255, 0) 
-            elif item == "Exit":
-                color = (255, 0, 0)
-                y += 25
             else: 
                 color = (180, 180, 180)
+                
+            if item == "Exit":
+                color = (255, 0, 0)
+                y += 25
             prefix = "> " if i == self.selected else "  "
             self.draw.text((30, y), prefix + item, font=self.font, fill=color, align="center")
             y += 25
