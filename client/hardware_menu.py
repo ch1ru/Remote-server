@@ -45,6 +45,7 @@ class DisplayMenu:
                 color = (0, 255, 0) 
             elif item == "Exit":
                 color = (255, 0, 0)
+                y += 25
             else: 
                 color = (180, 180, 180)
             prefix = "> " if i == self.selected else "  "
