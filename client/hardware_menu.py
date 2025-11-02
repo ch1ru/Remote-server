@@ -272,7 +272,7 @@ try:
                     time.sleep(0.05)
 
             if choice == "Exit":
-                workspace_menu()
+                break
         time.sleep(0.05)
 except KeyboardInterrupt:
     pass
