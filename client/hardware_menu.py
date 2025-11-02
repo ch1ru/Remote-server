@@ -136,10 +136,10 @@ def workspace_menu():
             return selected_id
         time.sleep(0.05)
     
-selected_id = workspace_menu()
+id = workspace_menu()
 
 
-device_menu = DisplayMenu(title=selected_id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "Exit"])
+device_menu = DisplayMenu(title=id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "Exit"])
 device_menu.render_menu()
 
 # wait for fastp to finish, then generate QR once
