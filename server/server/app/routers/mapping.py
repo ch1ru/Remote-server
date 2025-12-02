@@ -16,6 +16,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from ..worker.worker import run_bwa_mem, run_bwa_index, run_convert_to_bam
 from celery.result import AsyncResult
 from celery import uuid
+from ..config.dynamodb import table
 
 router = APIRouter(
     prefix="/api/mapping",
@@ -39,6 +40,17 @@ async def post_bwa_mem(
 
         run_bwa_mem.apply_async((filenames, id, out), task_id=full_job_id)
 
+        # table.put_item(
+        #     Item={
+        #         'job_id': full_job_id,
+        #         'type': 'mapping',
+        #         'created_at': datetime.datetime.utcnow().isoformat(),
+        #         'updated_at': datetime.datetime.utcnow().isoformat(),
+        #         'params': params,
+        #         'workspace_id': id
+        #     }
+        # )
+
         return JSONResponse(status_code=200, content={"message": "BWA mem started successfully.", "job_id": full_job_id})
     except Exception as e:
         print(e)
@@ -60,6 +72,17 @@ async def post_bwa_index(
 
         run_bwa_index.apply_async((filenames, id), task_id=full_job_id)
 
+        # table.put_item(
+        #     Item={
+        #         'job_id': full_job_id,
+        #         'type': 'mapping',
+        #         'created_at': datetime.datetime.utcnow().isoformat(),
+        #         'updated_at': datetime.datetime.utcnow().isoformat(),
+        #         'params': params,
+        #         'workspace_id': id
+        #     }
+        # )
+
         return JSONResponse(status_code=200, content={"message": "Indexing started successfully.", "job_id": full_job_id})
     except Exception as e:
         print(e)
@@ -77,6 +100,17 @@ async def post_samtools(
         full_job_id = await start_celery_job(f"assemble_{id}", "samtools", session)
 
         run_convert_to_bam.apply_async((sam_file, bam_file, id), task_id=full_job_id)
+
+        # table.put_item(
+        #     Item={
+        #         'job_id': full_job_id,
+        #         'type': 'samtools',
+        #         'created_at': datetime.datetime.utcnow().isoformat(),
+        #         'updated_at': datetime.datetime.utcnow().isoformat(),
+        #         'params': json.dumps({}),
+        #         'workspace_id': id
+        #     }
+        # )
 
         return JSONResponse(status_code=200, content={"message": "Conversion to BAM started successfully.", "job_id": full_job_id})
     except Exception as e:

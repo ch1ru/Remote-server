@@ -17,6 +17,8 @@ from fastapi.responses import JSONResponse
 from ..worker.worker import run_spades
 from celery.result import AsyncResult
 from celery import uuid
+from ..config.dynamodb import table
+import json
 
 router = APIRouter(
     prefix="/api/assemble",
@@ -40,6 +42,17 @@ async def post_assemble(
         full_job_id = await start_celery_job(f"assemble_{id}", "spades", session)
 
         run_spades.apply_async((params_dict.model_dump(by_alias=True), id), task_id=full_job_id)
+
+        # table.put_item(
+        #     Item={
+        #         'job_id': full_job_id,
+        #         'type': 'assemble',
+        #         'created_at': datetime.datetime.utcnow().isoformat(),
+        #         'updated_at': datetime.datetime.utcnow().isoformat(),
+        #         'params': json.dumps(params_dict.model_dump(by_alias=True)),
+        #         'workspace_id': id
+        #     }
+        # )
 
         return JSONResponse(status_code=200, content={"message": "Assembly started successfully.", "job_id": full_job_id})
     

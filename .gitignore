@@ -5,3 +5,5 @@ client/reports/*
 client/qr/*
 server/workspace
 client/data
+server/auth/keys/*
+server/nginx/tokens/*
