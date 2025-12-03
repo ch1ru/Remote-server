@@ -82,7 +82,6 @@ def gen_igv_url(id: str) -> str:
         f"http://localhost:8080/index.html?"
         f"genome={genome_url}&"
         f"genomeIndex={fai_url}&"
-        f"tracks={encoded_tracks}"
     )
 
     print(igv_url)
