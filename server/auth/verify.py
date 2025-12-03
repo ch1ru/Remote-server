@@ -19,6 +19,7 @@ async def verify(request: Request):
     else:
         # fallback to query param
         token = request.query_params.get("token")
+        print("token is ", token)
 
     if not token:
         return Response(status_code=401)
@@ -27,10 +28,13 @@ async def verify(request: Request):
         SECRET = os.getenv('JWS_SECRET').encode("utf-8")
         payload = jwt.decode(token, SECRET, algorithms=["HS256"], audience="igv-access")
     except InvalidTokenError:
+        print("Invalid token")
         return Response(status_code=401)
 
     # Optional: Check expiry, issuer, scope, etc.
     if payload.get("exp", 0) < time.time():
+        print("Token expired")
         return Response(status_code=401)
 
+    print("Token valid:", payload)
     return Response(status_code=200)
