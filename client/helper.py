@@ -12,6 +12,10 @@ import urllib.parse
 import jwt
 import time
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 api_client = client_module.api_client
 celery_client = client_module.celery_client
 
@@ -85,9 +89,9 @@ def gen_igv_url(id: str) -> str:
     encoded_token = urllib.parse.quote(token)
 
     igv_url = (
-        f"http://localhost:8080/index.html?"
-        f"genome={genome_url}&"
-        f"genomeIndex={fai_url}&"
+        f"{os.getenv('DEV_IGV')}/index.html?"
+        #f"genome={genome_url}&"
+        #f"genomeIndex={fai_url}&"
         f"token={encoded_token}"
     )
 
