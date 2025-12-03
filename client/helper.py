@@ -286,18 +286,11 @@ def get_bam(id: str, filename: str):
 def gen_jwt_token():
 
     # Load RSA private key (TODO: add path to env)
-    with open("/home/pi/device_private.pem", "rb") as f:
-        private_key = f.read()
+    SECRET = b'6bb818ae58acf0e281802cd2ad104ae14691500357bdb41f86e6baf861a881a7'
 
-    # Payload that FastAPI will verify
-    payload = {
-        "sub": "device123",
-        "aud": "igv-access",  # MUST match what your FastAPI expects
-        "exp": int(time.time()) + 300,  # expires in 5 minutes
-    }
+    payload = {"sub": "device123", "aud": "igv-access", "exp": int(time.time()) + 300}
 
-    # Sign JWT using RS256 with your private key
-    token = jwt.encode(payload, private_key, algorithm="RS256")
+    token = jwt.encode(payload, SECRET, algorithm="HS256")
 
     return token
 

@@ -5,7 +5,7 @@ import os, time
 
 app = FastAPI()
 
-PUBLIC_KEY_PATH = "/keys/device_public.pem"  # mount your public key here
+PUBLIC_KEY_PATH = "/public_keys/device_public.pem"  # mount your public key here
 with open(PUBLIC_KEY_PATH, "rb") as f:
     public_key = f.read()
 
@@ -24,7 +24,8 @@ async def verify(request: Request):
         return Response(status_code=401)
 
     try:
-        payload = jwt.decode(token, public_key, algorithms=["RS256"], audience="igv-access")
+        SECRET = b'6bb818ae58acf0e281802cd2ad104ae14691500357bdb41f86e6baf861a881a7'
+        payload = jwt.decode(token, SECRET, algorithms=["HS256"], audience="igv-access")
     except InvalidTokenError:
         return Response(status_code=401)
 

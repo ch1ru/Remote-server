@@ -86,9 +86,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./server/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./server/nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./server/nginx/tokens:/etc/nginx/tokens
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/tokens:/etc/nginx/tokens
     #  - ./server/certs:/etc/nginx/certs:ro   # optional if using HTTPS
     depends_on:
       - igv
@@ -97,12 +97,12 @@ services:
 
   auth:
     build:
-      context: ./server/auth
+      context: ./auth
       dockerfile: Dockerfile
     container_name: auth
     restart: unless-stopped
     volumes:
-      - ./server/auth/keys:/keys:ro
+      - ./auth/public_keys:/public_keys:ro
     networks:
       - bridged_net_adapter
 
