@@ -290,7 +290,7 @@ def get_bam(id: str, filename: str):
 def gen_jwt_token():
 
     # Load RSA private key (TODO: add path to env)
-    SECRET = b'6bb818ae58acf0e281802cd2ad104ae14691500357bdb41f86e6baf861a881a7'
+    SECRET = os.getenv('JWS_SECRET').encode("utf-8")  # Use a secure secret key
 
     payload = {"sub": "device123", "aud": "igv-access", "exp": int(time.time()) + 300}
 

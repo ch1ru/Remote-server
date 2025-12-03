@@ -101,6 +101,8 @@ services:
       dockerfile: Dockerfile
     container_name: auth
     restart: unless-stopped
+    env_file:
+      - ./auth/.env
     volumes:
       - ./auth/public_keys:/public_keys:ro
     networks:

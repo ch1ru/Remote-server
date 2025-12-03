@@ -24,7 +24,7 @@ async def verify(request: Request):
         return Response(status_code=401)
 
     try:
-        SECRET = b'6bb818ae58acf0e281802cd2ad104ae14691500357bdb41f86e6baf861a881a7'
+        SECRET = os.getenv('JWS_SECRET').encode("utf-8")
         payload = jwt.decode(token, SECRET, algorithms=["HS256"], audience="igv-access")
     except InvalidTokenError:
         return Response(status_code=401)
