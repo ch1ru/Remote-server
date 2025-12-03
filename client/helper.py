@@ -90,8 +90,8 @@ def gen_igv_url(id: str) -> str:
 
     igv_url = (
         f"{os.getenv('DEV_IGV')}/index.html?"
-        #f"genome={genome_url}&"
-        #f"genomeIndex={fai_url}&"
+        f"genome={genome_url}&"
+        f"genomeIndex={fai_url}&"
         f"token={encoded_token}"
     )
 
