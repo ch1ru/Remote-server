@@ -74,10 +74,10 @@ def wait_for_task(
 def gen_igv_url(id: str) -> str:
 
     # URLs
-    genome_url = f"http://localhost:5000/api/workspace/{id}/assembly/scaffolds.fasta"
-    fai_url = f"http://localhost:5000/api/workspace/{id}/assembly/scaffolds.fasta.fai"
-    bam_url = f"http://localhost:5000/api/workspace/{id}/mapping/anc.sorted.dedup.q20.bam"
-    bai_url = f"http://localhost:5000/api/workspace/{id}/mapping/anc.sorted.dedup.q20.bam.bai"
+    genome_url = f"{os.getenv('DEV_API')}/api/workspace/{id}/assembly/scaffolds.fasta"
+    fai_url = f"{os.getenv('DEV_API')}/api/workspace/{id}/assembly/scaffolds.fasta.fai"
+    bam_url = f"{os.getenv('DEV_API')}/api/workspace/{id}/mapping/anc.sorted.dedup.q20.bam"
+    bai_url = f"{os.getenv('DEV_API')}/api/workspace/{id}/mapping/anc.sorted.dedup.q20.bam.bai"
 
     # Track JSON
     track_json = f'[{{"name":"Ancestor","url":"{bam_url}",indexURL:"{bai_url}","type":"alignment"}}]'
