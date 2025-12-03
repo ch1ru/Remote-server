@@ -9,6 +9,8 @@ from http.server import SimpleHTTPRequestHandler
 import client as client_module
 from models.params import spadesParams, fastpParams, fastqcParams
 import urllib.parse
+import jwt
+import time
 
 api_client = client_module.api_client
 celery_client = client_module.celery_client
@@ -78,10 +80,15 @@ def gen_igv_url(id: str) -> str:
     encoded_tracks = urllib.parse.quote(track_json)
 
     # Full IGV URL
+
+    token = gen_jwt_token()
+    encoded_token = urllib.parse.quote(token)
+
     igv_url = (
         f"http://localhost:8080/index.html?"
         f"genome={genome_url}&"
         f"genomeIndex={fai_url}&"
+        f"token={encoded_token}"
     )
 
     print(igv_url)
@@ -275,6 +282,25 @@ def get_bam(id: str, filename: str):
     print(f"Temporary report URL: {url} (will auto-stop in 5 minutes)")
 
     return url
+
+def gen_jwt_token():
+
+    # Load RSA private key (TODO: add path to env)
+    with open("/home/pi/device_private.pem", "rb") as f:
+        private_key = f.read()
+
+    # Payload that FastAPI will verify
+    payload = {
+        "sub": "device123",
+        "aud": "igv-access",  # MUST match what your FastAPI expects
+        "exp": int(time.time()) + 300,  # expires in 5 minutes
+    }
+
+    # Sign JWT using RS256 with your private key
+    token = jwt.encode(payload, private_key, algorithm="RS256")
+
+    return token
+
 
 # Start a temporary HTTP server to serve the qc directory
 def start_temp_server(directory: str, filename: str, timeout: int = 300, bind_addr: str | None = None):
