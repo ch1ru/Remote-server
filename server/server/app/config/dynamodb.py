@@ -6,5 +6,3 @@ dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
 # Reference your table
 table = dynamodb.Table('Commands')
-
-table = None
