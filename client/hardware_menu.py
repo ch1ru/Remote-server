@@ -163,7 +163,7 @@ try:
 
                 y = 20
                 device_menu.draw.text((20, y), "Command | Params | Time", font=ImageFont.load_default(24), fill=(255, 255, 255))
-                y += 10
+                y += 8
                 for cmd in history:
                     cmd_type = cmd.get("type")
                     params = cmd.get("params")
