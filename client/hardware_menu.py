@@ -168,7 +168,7 @@ try:
                     params = cmd.get("params")
                     dt = cmd.get("created_at")
                     y += 25
-                    device_menu.draw.text((20, y), f"{cmd_type} | {params} | {dt}", font=ImageFont.load_default(24), fill=(255, 255, 255))
+                    device_menu.draw.text((20, y), f"{cmd_type} | {params} | {dt}", font=ImageFont.load_default(18), fill=(255, 255, 255))
                 device_menu.display.display()
             if choice == "Trim reads":
 
