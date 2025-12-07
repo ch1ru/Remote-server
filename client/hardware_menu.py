@@ -39,7 +39,7 @@ class DisplayMenu:
     def render_menu(self):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
         self.draw.text((20, 20), self.title, font=ImageFont.load_default(24), fill=(255, 255, 255))
-        y = 70
+        y = 60
         for i, item in enumerate(self.menu_items):
             if i == self.selected:
                 color = (0, 255, 0) 
@@ -159,11 +159,11 @@ try:
             if choice == "History":
                 history = get_workspace_history(id)
                 device_menu.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
-                commands_list = json.loads(history)
+         
 
                 y = 20
                 device_menu.draw.text((20, y), "Command | Params | Time", font=ImageFont.load_default(24), fill=(255, 255, 255))
-                for cmd in commands_list:
+                for cmd in history:
                     cmd_type = cmd.get("type")
                     params = cmd.get("params")
                     dt = cmd.get("created_at")
