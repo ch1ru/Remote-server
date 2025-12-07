@@ -39,16 +39,16 @@ async def post_fastp(
 
         run_fastp.apply_async((params_dict.model_dump(), id), task_id=full_job_id)
 
-        # table.put_item(
-        #     Item={
-        #         'job_id': full_job_id,
-        #         'type': 'fastp',
-        #         'created_at': datetime.datetime.utcnow().isoformat(),
-        #         'updated_at': datetime.datetime.utcnow().isoformat(),
-        #         'params': json.dumps(params_dict.model_dump(by_alias=True)),
-        #         'workspace_id': id
-        #     }
-        # )
+        table.put_item(
+            Item={
+                'ID': full_job_id,
+                'type': 'fastp',
+                'created_at': datetime.datetime.utcnow().isoformat(),
+                'updated_at': datetime.datetime.utcnow().isoformat(),
+                'params': json.dumps(params_dict.model_dump(by_alias=True)),
+                'workspace_id': id
+            }
+        )
 
         return JSONResponse(status_code=200, content={"message": "Assembly started successfully.", "job_id": full_job_id})
     except Exception as e:
@@ -70,16 +70,16 @@ async def post_fastqc(
 
         run_fastqc.apply_async((params_dict.model_dump(), id), task_id=full_job_id)
 
-        # table.put_item(
-        #     Item={
-        #         'job_id': full_job_id,
-        #         'type': 'fastqc',
-        #         'created_at': datetime.datetime.utcnow().isoformat(),
-        #         'updated_at': datetime.datetime.utcnow().isoformat(),
-        #         'params': json.dumps(params_dict.model_dump(by_alias=True)),
-        #         'workspace_id': id
-        #     }
-        # )
+        table.put_item(
+            Item={
+                'ID': full_job_id,
+                'type': 'fastqc',
+                'created_at': datetime.datetime.utcnow().isoformat(),
+                'updated_at': datetime.datetime.utcnow().isoformat(),
+                'params': json.dumps(params_dict.model_dump(by_alias=True)),
+                'workspace_id': id
+            }
+        )
 
         return JSONResponse(status_code=200, content={"message": "Fastqc started successfully.", "job_id": full_job_id})
     except Exception as e:

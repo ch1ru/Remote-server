@@ -43,16 +43,16 @@ async def post_assemble(
 
         run_spades.apply_async((params_dict.model_dump(by_alias=True), id), task_id=full_job_id)
 
-        # table.put_item(
-        #     Item={
-        #         'job_id': full_job_id,
-        #         'type': 'assemble',
-        #         'created_at': datetime.datetime.utcnow().isoformat(),
-        #         'updated_at': datetime.datetime.utcnow().isoformat(),
-        #         'params': json.dumps(params_dict.model_dump(by_alias=True)),
-        #         'workspace_id': id
-        #     }
-        # )
+        table.put_item(
+            Item={
+                'ID': full_job_id,
+                'type': 'assemble',
+                'created_at': datetime.datetime.utcnow().isoformat(),
+                'updated_at': datetime.datetime.utcnow().isoformat(),
+                'params': json.dumps(params_dict.model_dump(by_alias=True)),
+                'workspace_id': id
+            }
+        )
 
         return JSONResponse(status_code=200, content={"message": "Assembly started successfully.", "job_id": full_job_id})
     
