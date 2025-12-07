@@ -16,6 +16,7 @@ import datetime
 from fastapi.responses import JSONResponse
 from ..worker.worker import run_spades
 from celery.result import AsyncResult
+from boto3.dynamodb.conditions import Attr
 from celery import uuid
 from ..config.dynamodb import table
 import json
@@ -33,9 +34,8 @@ async def get_history(
     session: Session = Depends(get_db),
 ):
     try:
-        response = table.query(
-        IndexName="workspace_index",
-        KeyConditionExpression=Key("workspace_id").eq(workspace_id)
+        response = table.scan(
+        FilterExpression=Attr("workspace_id").eq(workspace_id)
     )
     except Exception as e:
         print(e)
