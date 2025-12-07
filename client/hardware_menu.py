@@ -162,6 +162,7 @@ try:
          
 
                 y = 20
+                y += 5
                 device_menu.draw.text((20, y), "Command | Params | Time", font=ImageFont.load_default(24), fill=(255, 255, 255))
                 for cmd in history:
                     cmd_type = cmd.get("type")
