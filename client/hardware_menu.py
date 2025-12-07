@@ -39,7 +39,7 @@ class DisplayMenu:
     def render_menu(self):
         self.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
         self.draw.text((20, 20), self.title, font=ImageFont.load_default(24), fill=(255, 255, 255))
-        y = 70
+        y = 50
         for i, item in enumerate(self.menu_items):
             if i == self.selected:
                 color = (0, 255, 0) 
@@ -139,7 +139,7 @@ def workspace_menu():
 id = workspace_menu()
 
 
-device_menu = DisplayMenu(title=id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "Exit"])
+device_menu = DisplayMenu(title=id, menu_items=["Trim reads", "Quality control", "Assembly", "Mappings", "History", "Exit"])
 device_menu.render_menu()
 
 # wait for fastp to finish, then generate QR once
@@ -156,6 +156,10 @@ try:
             device_menu.render_menu()
         if not GPIO.input(device_menu.BUTTON_X):  # Select
             choice = device_menu.menu_items[device_menu.selected]
+            if choice == "History":
+                history = get_workspace_history(id)
+                device_menu.draw.rectangle((0, 0, 320, 240), (0, 0, 0))  # clear screen
+                device_menu.draw.text((20, 20), history, font=ImageFont.load_default(24), fill=(255, 255, 255))
             if choice == "Trim reads":
 
                 while True:

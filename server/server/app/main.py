@@ -2,7 +2,7 @@ import asyncio
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from .routers import assemble, upload, qc, health, mapping, workspace
+from .routers import assemble, upload, qc, health, mapping, workspace, history
 from .schemas.schemas import Base
 from .config.database import engine
 from contextlib import asynccontextmanager
@@ -47,3 +47,4 @@ app.include_router(qc.router)
 app.include_router(mapping.router)
 app.include_router(health.router)
 app.include_router(workspace.router)
+app.include_router(history.router)

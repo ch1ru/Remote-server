@@ -98,6 +98,10 @@ def gen_igv_url(id: str) -> str:
     print(igv_url)
     return igv_url
 
+def get_workspace_history(workspace_id: str):
+    response = api_client.get(endpoint=f'/api/history/{workspace_id}')
+    return response
+
 def upload(filenames: list[str], id):
     # Open the file in binary mode
     files = []
