@@ -1,7 +1,8 @@
-from fastapi import FastAPI, Request, Response
+from fastapi import FastAPI, HTTPException, status, Request, Response
 import jwt
 from jwt import InvalidTokenError
 import os, time
+from cryptography.hazmat.primitives import serialization
 
 app = FastAPI()
 
@@ -25,16 +26,22 @@ async def verify(request: Request):
         return Response(status_code=401)
 
     try:
-        SECRET = os.getenv('JWS_SECRET').encode("utf-8")
-        payload = jwt.decode(token, SECRET, algorithms=["HS256"], audience="igv-access")
-    except InvalidTokenError:
-        print("Invalid token")
-        return Response(status_code=401)
+        # Verify and Decode
+        decoded_payload = jwt.decode(
+            token, 
+            public_key, 
+            algorithms=["RS256"]
+        )
+    
+        print("Token is valid!")
+        print(f"User ID: {decoded_payload.get('sub')}")
+        print(f"Role: {decoded_payload.get('role')}")
 
-    # Optional: Check expiry, issuer, scope, etc.
-    if payload.get("exp", 0) < time.time():
-        print("Token expired")
-        return Response(status_code=401)
+    except jwt.ExpiredSignatureError:
+        print("Security Alert: The QR code/token has expired.")
+        raise HTTPException(status_code=401, detail="Token is invalid")
+    except jwt.InvalidTokenError:
+        print("Security Alert: Invalid signature or corrupted token.")
+        raise HTTPException(status_code=401, detail="Token is invalid")
 
-    print("Token valid:", payload)
     return Response(status_code=200)
